@@ -1,54 +1,53 @@
-FAQ Chatbot
-Description
-The FAQ Chatbot is an intelligent assistant designed to provide quick and accurate responses to frequently asked questions. Built using Python and integrated with various external APIs, this chatbot enhances user experience by delivering real-time information and personalized interactions.
+# FAQ Chatbot
 
-Features
-Natural Language Processing: Leverages NLP techniques to understand user queries and provide relevant answers.
-Dynamic FAQs: Easily update and manage frequently asked questions without modifying the core code.
-Multi-turn Conversations: Capable of handling multi-turn dialogues, maintaining context for more coherent interactions.
-Real-time Information: Integrates external APIs (e.g., weather, news) to provide users with up-to-date information.
-User Interaction Tracking: Remembers user preferences and past interactions to enhance personalization.
-Technologies Used
-Python
-Flask
-Natural Language Processing (NLP)
-HTML/CSS for Frontend
-JavaScript (for dynamic interactions)
-External APIs (e.g., Weather API)
-Installation
-Clone the repository:
+A simple FAQ chatbot built using Flask and integrated with an external API for enhanced functionality. This project allows users to interact with a chatbot that answers frequently asked questions and provides real-time information.
 
-bash
-Copy code
-git clone https://github.com/zainbaig0529/faq-chatbot.git
-Navigate to the project directory:
+## Features
 
-bash
-Copy code
-cd faq-chatbot
-Create a virtual environment and activate it:
+- **Natural Language Processing:** Understands user queries and provides relevant answers.
+- **Real-Time Information:** Integrates with an external API (e.g., weather, news) for up-to-date information.
+- **User Interaction History:** Keeps track of previous interactions for better user experience.
+- **Single Page Application:** Displays all interactions without page refresh.
 
-bash
-Copy code
+## Tech Stack
+
+- Python
+- Flask
+- HTML/CSS/JavaScript
+- External API Integration
+
+## Installation
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/zainbaig0529/faq-chatbot.git
+   cd faq-chatbot
+
+2. Set up a virtual environment:
 python -m venv chatbot-env
 source chatbot-env/bin/activate  # On Windows use `chatbot-env\Scripts\activate`
-Install the required packages:
 
-bash
-Copy code
+3. Install the required packages:
 pip install -r requirements.txt
-Run the application:
 
-bash
-Copy code
+4. Set environment variables for your API keys:
+export SECRET_KEY='your_secret_key'
+export WEATHER_API_KEY='your_weather_api_key'
+
+Running the Application Locally
+To run the application locally, use:
 python app.py
-Usage
-Open your web browser and navigate to http://127.0.0.1:5000 to interact with the FAQ Chatbot.
+Open your web browser and navigate to http://127.0.0.1:5000.
+
+Deployment
+This application is deployed on Heroku. You can access it here.
 
 Contributing
-Contributions are welcome! Please create a pull request or open an issue for any features or improvements you'd like to suggest.
+Contributions are welcome! Please open an issue or submit a pull request.
 
 License
 This project is licensed under the MIT License. See the LICENSE file for details.
 
-Feel free to modify any sections to better fit your project specifics or add any additional information that you think is necessary!
+
+You can save this text into a file named `README.md` in your project repository. Let me know if you need any adjustments or additions!
