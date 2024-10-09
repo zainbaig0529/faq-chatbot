@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot - FAQ Assistant</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body { 
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+        }
+        .chat-container {
+            max-width: 600px;
+            margin: 40px auto;
+            border-radius: 16px;
+            background-color: #ffffff;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+        .chat-box {
+            height: 400px;
+            overflow-y: auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+            border-radius: 16px 16px 0 0;
+            border-bottom: 1px solid #e0e0e0;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .input-container {
+            display: flex;
+            padding: 10px;
+            background-color: #ffffff;
+            border-radius: 0 0 16px 16px;
+            border-top: 1px solid #e0e0e0;
+        }
+        input[type="text"] {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 50px;
+            font-size: 16px;
+            background-color: #f0f0f0;
+            margin-right: 10px;
+            outline: none;
+        }
+        button {
+            padding: 10px 16px;
+            border: none;
+            border-radius: 50px;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.2s;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .message {
+            padding: 10px;
+            border-radius: 20px;
+            max-width: 70%;
+            margin-bottom: 8px;
+            word-wrap: break-word;
+        }
+        .message.user {
+            background-color: #007bff;
+            color: white;
+            align-self: flex-end;
+        }
+        .message.bot {
+            background-color: #e0e0e0;
+            align-self: flex-start;
+        }
+        .search-container {
+            margin: 20px auto;
+            text-align: center;
+        }
+        .search-container input {
+            padding: 12px;
+            border-radius: 50px;
+            border: 1px solid #e0e0e0;
+            width: 70%;
+            max-width: 400px;
+            outline: none;
+            font-size: 16px;
+        }
+        .search-container button {
+            margin-left: 10px;
+            padding: 10px 16px;
+            background-color: #007bff;
+            border-radius: 50px;
+            border: none;
+            color: white;
+            cursor: pointer;
+        }
+        .faqs {
+            list-style: none;
+            padding: 0;
+        }
+        .faqs li {
+            margin: 10px 0;
+            padding: 12px;
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+        }
+        .faqs li strong {
+            font-weight: 600;
+        }
+        .faqs li p {
+            margin: 0;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading spinner (hidden by default) -->
+    <div id="loading-spinner" style="display: none; text-align: center; font-size: 16px; color: #007bff;">
+        Sending...
+    </div>
+
+    <div class="chat-container">
+        <div class="chat-box" id="chat-box">
+            {% for message in chat_history %}
+                <div class="message {{ message.type }}">{{ message.message }}</div>
+            {% endfor %}
+        </div>
+        <div class="input-container">
+            <form id="chat-form" action="{{ url_for('respond') }}" method="POST">
+                <input type="text" name="user_input" placeholder="Ask a question..." required>
+                <button type="submit">Send</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="search-container">
+        <h4>Search FAQs</h4>
+        <form action="{{ url_for('search') }}" method="POST">
+            <input type="text" name="search_input" placeholder="Search FAQs..." required>
+            <button type="submit">Search</button>
+        </form>
+
+        {% if search_results %}
+            <h5>Search Results:</h5>
+            <ul class="faqs">
+                {% for result in search_results %}
+                    <li>
+                        <strong>{{ result.Question }}</strong>
+                        <p>{{ result.Answer }}</p>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+    
+    <!-- Include jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $('#chat-form').on('submit', function(e) {
+            e.preventDefault();
+            const button = $(this).find('button');
+            const userInput = $('input[name="user_input"]').val();  // Get the user's input
+            button.prop('disabled', true);  // Disable the button to prevent double submissions
+            $('#loading-spinner').show();   // Show loading spinner
+
+            // Append the user's message to the chat box
+            $('#chat-box').append(`<div class="message user">${userInput}</div>`);
+            // Scroll to the bottom to show the latest message
+            $('#chat-box').scrollTop($('#chat-box')[0].scrollHeight);
+
+            $.ajax({
+                type: 'POST',
+                url: $(this).attr('action'),
+                data: $(this).serialize(),
+                success: function(data) {
+                    // Get the bot's message from the response
+                    const botMessage = $(data).find('.message.bot').last().html(); // Get the latest bot response
+                    $('#chat-box').append(`<div class="message bot">${botMessage}</div>`); // Append bot response
+                    // Clear the input field after sending
+                    $('input[name="user_input"]').val('');
+                    // Scroll to the bottom to show the latest message
+                    $('#chat-box').scrollTop($('#chat-box')[0].scrollHeight);
+                    $('#loading-spinner').hide();   // Hide loading spinner
+                    button.prop('disabled', false); // Re-enable the button
+                },
+                error: function(xhr, status, error) {
+                    console.error("Error:", error);
+                    alert("Something went wrong. Please try again.");
+                    $('#loading-spinner').hide();   // Hide loading spinner
+                    button.prop('disabled', false); // Re-enable the button
+                }
+            });
+        });
+    </script>
+</body>
+</html>
