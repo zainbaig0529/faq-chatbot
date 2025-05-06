@@ -1,53 +1,76 @@
-# FAQ Chatbot
+FAQ Chatbot 🤖
+A simple FAQ chatbot built using Flask, with integration of external APIs for enhanced functionality. Users can interact with the bot to get answers to common questions and real-time data such as weather updates.
 
-A simple FAQ chatbot built using Flask and integrated with an external API for enhanced functionality. This project allows users to interact with a chatbot that answers frequently asked questions and provides real-time information.
+🚀 Features
+Natural Language Processing: Understands user queries and provides relevant responses.
 
-## Features
+Real-Time Info: Pulls data from external APIs (e.g., weather, news).
 
-- **Natural Language Processing:** Understands user queries and provides relevant answers.
-- **Real-Time Information:** Integrates with an external API (e.g., weather, news) for up-to-date information.
-- **User Interaction History:** Keeps track of previous interactions for better user experience.
-- **Single Page Application:** Displays all interactions without page refresh.
+User Interaction History: Maintains a simple session-based history.
 
-## Tech Stack
+Single Page Application: Smooth interactions without page refresh.
 
-- Python
-- Flask
-- HTML/CSS/JavaScript
-- External API Integration
+🛠 Tech Stack
+Python
 
-## Installation
+Flask
 
-1. Clone the repository:
+HTML/CSS/JavaScript
 
-   ```bash
-   git clone https://github.com/zainbaig0529/faq-chatbot.git
-   cd faq-chatbot
+External APIs (e.g., OpenWeather)
 
-2. Set up a virtual environment:
+🔧 Installation
+Clone the repository:
+
+bash
+Copy
+Edit
+git clone https://github.com/zainbaig0529/faq-chatbot.git
+cd faq-chatbot
+Set up a virtual environment:
+
+bash
+Copy
+Edit
 python -m venv chatbot-env
-source chatbot-env/bin/activate  # On Windows use `chatbot-env\Scripts\activate`
+source chatbot-env/bin/activate  # On Windows use chatbot-env\Scripts\activate
+Install dependencies:
 
-3. Install the required packages:
+bash
+Copy
+Edit
 pip install -r requirements.txt
+Set environment variables (Linux/macOS):
 
-4. Set environment variables for your API keys:
+bash
+Copy
+Edit
 export SECRET_KEY='your_secret_key'
 export WEATHER_API_KEY='your_weather_api_key'
+On Windows (Command Prompt):
 
-Running the Application Locally
-To run the application locally, use:
+cmd
+Copy
+Edit
+set SECRET_KEY=your_secret_key
+set WEATHER_API_KEY=your_weather_api_key
+▶️ Running Locally
+bash
+Copy
+Edit
 python app.py
-Open your web browser and navigate to http://127.0.0.1:5000.
+Visit: http://127.0.0.1:5000
 
-Deployment
-This application is deployed on Heroku. You can access it here.
+🌐 Live Demo
+Check out the live version here:
+🔗 https://faq-chatbot-czyy.onrender.com
 
-Contributing
-Contributions are welcome! Please open an issue or submit a pull request.
+📦 Deployment
+This app is currently deployed on Render. Simply push changes to GitHub and Render will auto-deploy.
 
-License
-This project is licensed under the MIT License. See the LICENSE file for details.
+🤝 Contributing
+Pull requests are welcome!
+For major changes, please open an issue first to discuss what you’d like to change.
 
-
-You can save this text into a file named `README.md` in your project repository. Let me know if you need any adjustments or additions!
+📄 License
+This project is licensed under the MIT License.
