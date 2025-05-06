@@ -33,13 +33,16 @@ class User(db.Model, UserMixin):
 # Create the database and table if it doesn't exist
 with app.app_context():
     db.create_all()
+with app.app_context():
+    if not User.query.filter_by(username='demo').first():
+        demo_user = User(username='demo')
+        demo_user.set_password('demo123')
+        db.session.add(demo_user)
+        db.session.commit()
+        print("Demo user created.")
+    else:
+        print("Demo user already exists.")
 
-# Create demo user if it doesn't exist
-if not User.query.filter_by(username='demo').first():
-    demo_user = User(username='demo')
-    demo_user.set_password('demo123')  # Simple password for testing
-    db.session.add(demo_user)
-    db.session.commit()
 
 
 # FAQ dataset
