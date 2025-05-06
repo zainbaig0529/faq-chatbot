@@ -34,6 +34,14 @@ class User(db.Model, UserMixin):
 with app.app_context():
     db.create_all()
 
+# Create demo user if it doesn't exist
+if not User.query.filter_by(username='demo').first():
+    demo_user = User(username='demo')
+    demo_user.set_password('demo123')  # Simple password for testing
+    db.session.add(demo_user)
+    db.session.commit()
+
+
 # FAQ dataset
 faqs = [
     {'Question': 'What is the launch date of Product X?', 'Answer': 'The launch date is January 15, 2024.'},
