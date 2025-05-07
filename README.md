@@ -30,33 +30,22 @@ A simple FAQ chatbot built using Flask, with integration of external APIs for en
 git clone https://github.com/zainbaig0529/faq-chatbot.git
 cd faq-chatbot
 2. Set up a virtual environment
-bash
-Copy
-Edit
 python -m venv chatbot-env
 source chatbot-env/bin/activate  # On Windows: chatbot-env\Scripts\activate
+
 3. Install dependencies
-bash
-Copy
-Edit
 pip install -r requirements.txt
+
 4. Set environment variables
 On macOS/Linux:
-bash
-Copy
-Edit
 export SECRET_KEY='your_secret_key'
 export WEATHER_API_KEY='your_weather_api_key'
+
 On Windows (CMD):
-cmd
-Copy
-Edit
 set SECRET_KEY=your_secret_key
 set WEATHER_API_KEY=your_weather_api_key
+
 ▶️ Running Locally
-bash
-Copy
-Edit
 python app.py
 Visit http://127.0.0.1:5000 in your browser.
 
